@@ -40,6 +40,7 @@ def classify(iris: Iris) -> Response:
     Response
         Response containing the iris_type.
     """
-    input_array = np.array(list(iris.dict().values())).reshape(1, -1)
+    values = [iris.sepal_length, iris.sepal_width, iris.petal_length, iris.petal_width]
+    input_array = np.array(values).reshape(1, -1)
     result = iris_clf_runner.predict.run(input_array)
     return {"iris_type": DECODING[int(result)]}
