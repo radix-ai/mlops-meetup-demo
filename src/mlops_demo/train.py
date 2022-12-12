@@ -1,7 +1,6 @@
 """Code to train a new model with MLFlow and BentoML."""
 import logging
 
-import bentoml
 import mlflow
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
@@ -16,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 run_id = configure_mlflow()
 
 # PARAMS
-C = 1
+C = 100
 logging.info(f"Parameters: C={C}")
 mlflow.log_params({"C": C})
 
@@ -45,8 +44,3 @@ mlflow.log_image(confusion_matrix, "confusion_matrix.png")
 
 model_name = "iris_model"
 mlflow.sklearn.log_model(model, model_name)
-
-# # REGISTER MODEL IN BENTOML
-model_uri = f"runs:/{run_id}/{model_name}"
-bento_model = bentoml.mlflow.import_model(model_name, model_uri)
-logging.info("\nModel imported to BentoML: %s" % bento_model)

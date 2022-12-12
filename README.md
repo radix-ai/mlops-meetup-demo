@@ -28,6 +28,13 @@ With the MLFlow server running run the following.
 poetry run python src/mlops_demo/train.py
 ```
 
+## Register latest model in BentoML
+Register th latest model from MLFlow in BentoML so that it can be used by the BentoML service.
+
+```
+python /app/src/mlops_demo/register_model.py
+```
+
 ## Run the model in a local BentoML Service
 We can run the service we defined in `src/mlops_demo/service.py` and the `iris_model` we registered in `train.py` as follows.
 
