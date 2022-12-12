@@ -1,0 +1,31 @@
+{
+  "template": "https://github.com/radix-ai/poetry-cookiecutter.git",
+  "commit": "80bf0e714196cebb63993e5e3f659cf10e5568cb",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "package_name": "mlops_demo",
+      "package_description": "A Python package that ...",
+      "package_url": "https://github.com/user/my-package",
+      "author_name": "John Smith",
+      "author_email": "john@example.com",
+      "python_version": "3.8",
+      "development_environment": "simple",
+      "with_conventional_commits": "0",
+      "with_fastapi_api": "1",
+      "with_jupyter_lab": "0",
+      "with_pydantic_typing": "1",
+      "with_sentry_logging": "0",
+      "with_streamlit_app": "0",
+      "with_typer_cli": "0",
+      "continuous_integration": "GitHub",
+      "docstring_style": "NumPy",
+      "private_package_repository_name": "",
+      "private_package_repository_url": "",
+      "__package_name_kebab_case": "mlops-demo",
+      "__package_name_snake_case": "mlops_demo",
+      "_template": "https://github.com/radix-ai/poetry-cookiecutter.git"
+    }
+  },
+  "directory": null
+}

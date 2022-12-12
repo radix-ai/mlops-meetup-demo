@@ -1,0 +1,1 @@
+docker run -it --rm -p 3000:3000 iris_classifier:latest serve --production
