@@ -91,9 +91,6 @@ RUN echo 'source /usr/share/zsh-antigen/antigen.zsh' >> ~/.zshrc && \
     echo 'SAVEHIST=1000' >> ~/.zshrc && \
     zsh -c 'source ~/.zshrc'
 
-# Install azure cli
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
 # Install Docker CE CLI
 RUN sudo apt-get update \
     && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 lsb-release \
@@ -101,21 +98,3 @@ RUN sudo apt-get update \
     && echo "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/$(lsb_release -is | tr '[:upper:]' '[:lower:]') $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list \
     && sudo apt-get update \
     && sudo apt-get install -y docker-ce-cli
-
-
-
-# Install Terraform
-RUN  sudo apt-get update && \
-sudo apt-get install -y wget gnupg software-properties-common && \
-wget -O- https://apt.releases.hashicorp.com/gpg | \
-gpg --dearmor | \
-sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-    https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-sudo tee /etc/apt/sources.list.d/hashicorp.list && \
-sudo apt update && sudo apt-get install terraform
-
-# # Install Docker Compose
-# RUN export LATEST_COMPOSE_VERSION=$(curl -sSL "https://api.github.com/repos/docker/compose/releases/latest" | grep -o -P '(?<="tag_name": ").+(?=")') \
-#     && sudo curl -sSL "https://github.com/docker/compose/releases/download/${LATEST_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
-#     && sudo chmod +x /usr/local/bin/docker-compose
