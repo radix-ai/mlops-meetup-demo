@@ -144,7 +144,7 @@ xfail_strict = true
   [tool.poe.tasks.bentoml-serve]
   help = "Serve a REST API in production"
   cmd = """
-    docker run -it --rm -p 3000:3000 iris_classifier:latest serve --production
+    bentoml serve src.mlops_demo.service:svc --reload --port=8000
     """
 
   [tool.poe.tasks.test]
