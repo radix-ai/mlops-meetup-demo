@@ -1,7 +1,7 @@
 """Setup configuration for mlfow."""
 import mlflow
 
-TRACKING_URI = "http://127.0.0.1:5050"
+TRACKING_URI = "http://127.0.0.1:5000"
 
 
 def get_tracking_uri() -> str:

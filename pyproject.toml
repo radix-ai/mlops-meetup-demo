@@ -22,6 +22,7 @@ scikit-learn = "^1.2.0"
 mlflow = "^2.0.1"
 bentoml = "^1.0.12"
 seaborn = "^0.12.1"
+joblib = "^1.2.0"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 absolufy-imports = "^0.3.1"
@@ -109,42 +110,26 @@ xfail_strict = true
 
 [tool.poe.tasks]  # https://github.com/nat-n/poethepoet
 
-  [tool.poe.tasks.dev]
-  help = "Serve a REST API in development"
+  [tool.poe.tasks.mlflow-server]
+  help = "Start the MLFlow server"
   cmd = """
-    uvicorn
-      --host 0.0.0.0
-      --port $port
-      --reload
-      mlops_demo.api:app
+    mlflow server \
+        --backend-store-uri sqlite:///mlflow.db \
+        --default-artifact-root file:///app/mlflow/ \
+        --host 127.0.0.1
     """
 
-    [[tool.poe.tasks.dev.args]]
-    help = "Bind socket to this port (default: 8000)"
-    name = "port"
-    options = ["--port"]
-    default = "8000"
-
-  [tool.poe.tasks.docs]
-  help = "Generate this package's docs"
+  [tool.poe.tasks.build-bento]
+  help = "Build a bento."
   cmd = """
-    pdoc
-      --docformat $docformat
-      --output-directory $outputdirectory
-      mlops_demo
+    bentoml build
     """
 
-    [[tool.poe.tasks.docs.args]]
-    help = "The docstring style (default: numpy)"
-    name = "docformat"
-    options = ["--docformat"]
-    default = "numpy"
-
-    [[tool.poe.tasks.docs.args]]
-    help = "The output directory (default: docs)"
-    name = "outputdirectory"
-    options = ["--output-directory"]
-    default = "docs"
+  [tool.poe.tasks.build-docker]
+  help = "Containerize a built bento"
+  cmd = """
+    bentoml containerize iris_service:latest
+    """
 
   [tool.poe.tasks.lint]
   help = "Lint this package"
@@ -156,28 +141,11 @@ xfail_strict = true
         --color always
       """
 
-  [tool.poe.tasks.serve]
+  [tool.poe.tasks.bentoml-serve]
   help = "Serve a REST API in production"
   cmd = """
-    gunicorn
-      --access-logfile -
-      --bind 0.0.0.0:$port
-      --graceful-timeout 10
-      --keep-alive 10
-      --log-file -
-      --timeout 30
-      --worker-class uvicorn.workers.UvicornWorker
-      --worker-tmp-dir /dev/shm
-      --workers 2
-      mlops_demo.api:app
+    docker run -it --rm -p 3000:3000 iris_classifier:latest serve --production
     """
-  use_exec = true
-
-    [[tool.poe.tasks.serve.args]]
-    help = "Bind socket to this port (default: 8000)"
-    name = "port"
-    options = ["--port"]
-    default = "8000"
 
   [tool.poe.tasks.test]
   help = "Test this package"

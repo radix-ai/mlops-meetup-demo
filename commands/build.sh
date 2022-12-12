@@ -1,2 +1,0 @@
-bentoml build
-bentoml containerize iris_service:latest

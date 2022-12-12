@@ -1,7 +1,7 @@
-"""Code to train a new model."""
+"""Code to train a new model with MLFlow and BentoML."""
 import logging
 
-import bentoml  # type: ignore[syntax]
+import bentoml
 import mlflow
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
@@ -44,7 +44,7 @@ confusion_matrix = draw_confusion_matrix(y_test, y_test_pred)
 mlflow.log_image(confusion_matrix, "confusion_matrix.png")
 
 model_name = "iris_model"
-mlflow.sklearn.log_model(model, model_name, registered_model_name=model_name)
+mlflow.sklearn.log_model(model, model_name)
 
 # # REGISTER MODEL IN BENTOML
 model_uri = f"runs:/{run_id}/{model_name}"

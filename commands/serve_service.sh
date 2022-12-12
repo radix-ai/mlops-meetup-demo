@@ -1,1 +1,0 @@
-bentoml serve src.mlops_demo.service:svc --reload --port=8000

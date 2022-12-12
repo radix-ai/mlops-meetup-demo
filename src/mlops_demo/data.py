@@ -57,7 +57,7 @@ def split_data(
     ]
 
     # Shuffle all the data
-    data = data.sample(frac=1).reset_index(drop=True)
+    data = data.sample(frac=1, random_state=42).reset_index(drop=True)
 
     # Split to training and testing data
     n = data.shape[0]
